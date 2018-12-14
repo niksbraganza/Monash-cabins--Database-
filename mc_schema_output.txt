@@ -1,0 +1,927 @@
+SQL> DROP TABLE RATES;
+
+Table RATES dropped.
+
+SQL> DROP TABLE CONTRACT;
+
+Table CONTRACT dropped.
+
+SQL> DROP TABLE BOOKING;
+
+Table BOOKING dropped.
+
+SQL> DROP TABLE RUNNING_SHEET;
+
+Table RUNNING_SHEET dropped.
+
+SQL> DROP TABLE CLEANER;
+
+Table CLEANER dropped.
+
+SQL> DROP TABLE CABIN;
+
+Table CABIN dropped.
+
+SQL> DROP TABLE REVIEW;
+
+Table REVIEW dropped.
+
+SQL> DROP TABLE GUEST;
+
+Table GUEST dropped.
+
+SQL> DROP TABLE RESORT;
+
+Table RESORT dropped.
+
+SQL> DROP TABLE POINT_OF_INTEREST;
+
+Table POINT_OF_INTEREST dropped.
+
+SQL> DROP TABLE TOWN;
+
+Table TOWN dropped.
+
+SQL> DROP TABLE MANAGER;
+
+Table MANAGER dropped.
+
+SQL> DROP SEQUENCE running_sheet_cabin_no_seq;
+
+Sequence RUNNING_SHEET_CABIN_NO_SEQ dropped.
+
+SQL> DROP SEQUENCE resort_resort_id_seq;
+
+Sequence RESORT_RESORT_ID_SEQ dropped.
+
+SQL> DROP SEQUENCE manager_manager_id_seq;
+
+Sequence MANAGER_MANAGER_ID_SEQ dropped.
+
+SQL> DROP SEQUENCE guest_guest_no_seq;
+
+Sequence GUEST_GUEST_NO_SEQ dropped.
+
+SQL> DROP SEQUENCE cleaner_contractor_no_seq;
+
+Sequence CLEANER_CONTRACTOR_NO_SEQ dropped.
+
+SQL> DROP SEQUENCE cabin_cabin_no_seq;
+
+Sequence CABIN_CABIN_NO_SEQ dropped.
+
+SQL> 
+SQL> 
+SQL> CREATE TABLE booking (
+  2      booking_start_date   DATE NOT NULL,
+  3      booking_end_date     DATE NOT NULL,
+  4      booking_adults       NUMBER(2) NOT NULL,
+  5      booking_children     NUMBER(2) NOT NULL,
+  6      booking_pets         NUMBER(2) NOT NULL,
+  7      cabin_no             NUMBER(3) NOT NULL,
+  8      resort_id            NUMBER(5) NOT NULL,
+  9      guest_no             NUMBER(6) NOT NULL
+ 10  );
+
+Table BOOKING created.
+
+SQL> 
+SQL> COMMENT ON COLUMN booking.booking_start_date IS
+  2      'Booking_Start_Date = Booking start date';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN booking.booking_end_date IS
+  2      'Booking_End_Date = Booking end date';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN booking.booking_adults IS
+  2      'Booking_Adults = Number of adults';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN booking.booking_children IS
+  2      'Booking_Children = Number of children';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN booking.booking_pets IS
+  2      'Booking_Pets = Number of pets';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN booking.cabin_no IS
+  2      'Cabin_No = Cabin number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN booking.resort_id IS
+  2      'Resort_ID = Resort ID';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN booking.guest_no IS
+  2      'Guest_No = Guest number';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE booking
+  2      ADD CONSTRAINT booking_pk PRIMARY KEY ( booking_start_date,
+  3                                              cabin_no,
+  4                                              resort_id,
+  5                                              guest_no );
+
+Table BOOKING altered.
+
+SQL> 
+SQL> CREATE TABLE cabin (
+  2      cabin_no               NUMBER(3) NOT NULL,
+  3      cabin_bedroom          NUMBER(2) NOT NULL,
+  4      cabin_sleep_capacity   NUMBER(2) NOT NULL,
+  5      cabin_desc             VARCHAR2(300) NOT NULL,
+  6      cabin_stdcleantime     NUMBER(2) NOT NULL,
+  7      resort_id              NUMBER(5) NOT NULL,
+  8      cabin_type             VARCHAR2(10)
+  9  );
+
+Table CABIN created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cabin.cabin_no IS
+  2      'Cabin_No = Cabin number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cabin.cabin_bedroom IS
+  2      'Cabin_Bedroom = Number of bedrooms';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cabin.cabin_sleep_capacity IS
+  2      'Cabin_Sleep_Capacity = Number of people who can sleep';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cabin.cabin_desc IS
+  2      'Cabin_Desc = Cabin description';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cabin.cabin_stdcleantime IS
+  2      'Cabin_Stdcleantime = Cabin standard cleaning time';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cabin.resort_id IS
+  2      'Resort_ID = Resort ID';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cabin.cabin_type IS
+  2      'Cabin_Type = Cabin type';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE cabin ADD CONSTRAINT cabin_pk PRIMARY KEY ( cabin_no,
+  2                                                          resort_id );
+
+Table CABIN altered.
+
+SQL> 
+SQL> CREATE TABLE cleaner (
+  2      contractor_no        NUMBER(3) NOT NULL,
+  3      contractor_fname     VARCHAR2(50),
+  4      contractor_lname     VARCHAR2(50),
+  5      contractor_rate      NUMBER(3),
+  6      contractor_phone     NUMBER(10),
+  7      contractor_address   VARCHAR2(1000)
+  8  );
+
+Table CLEANER created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cleaner.contractor_fname IS
+  2      'Contractor_Fname = Contractor first name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cleaner.contractor_lname IS
+  2      'Contractor_Lname = Contractor last name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cleaner.contractor_rate IS
+  2      'Contractor_Rate = Contractor hourly rate';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cleaner.contractor_phone IS
+  2      'Contractor_Phone = Contractor phone number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN cleaner.contractor_address IS
+  2      'Contractor_Address = contractor address';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE cleaner ADD CONSTRAINT cleaner_pk PRIMARY KEY ( contractor_no );
+
+Table CLEANER altered.
+
+SQL> 
+SQL> CREATE TABLE contract (
+  2      contract_type        VARCHAR2(10),
+  3      contract_rate        NUMBER(3),
+  4      contract_startdate   DATE NOT NULL,
+  5      contract_enddate     DATE,
+  6      contractor_no        NUMBER(3) NOT NULL,
+  7      contractor_address   CHAR(100)
+  8  );
+
+Table CONTRACT created.
+
+SQL> 
+SQL> COMMENT ON COLUMN contract.contract_type IS
+  2      'Contract_Type = Contract type';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN contract.contract_rate IS
+  2      'Contract_Rate = Contract hourly rate';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN contract.contract_startdate IS
+  2      'Contract_Startdate = Contract start date';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN contract.contract_enddate IS
+  2      'Contract_Enddate = Contract end date';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE contract ADD CONSTRAINT contract_pk PRIMARY KEY ( contract_startdate,
+  2                                                                contractor_no );
+
+Table CONTRACT altered.
+
+SQL> 
+SQL> CREATE TABLE guest (
+  2      guest_no        NUMBER(6) NOT NULL,
+  3      guest_name      VARCHAR2(50) NOT NULL,
+  4      guest_address   VARCHAR2(150) NOT NULL,
+  5      guest_country   VARCHAR2(50) NOT NULL,
+  6      guest_email     VARCHAR2(50) NOT NULL,
+  7      guest_phone     NUMBER(10) NOT NULL
+  8  );
+
+Table GUEST created.
+
+SQL> 
+SQL> COMMENT ON COLUMN guest.guest_no IS
+  2      'Guest_No = Guest number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN guest.guest_name IS
+  2      'Guest_Name = Guest name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN guest.guest_address IS
+  2      'Guest_Address = Guest Address';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN guest.guest_country IS
+  2      'Guest_Country = guest country';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN guest.guest_email IS
+  2      'Guest_Email = Guest email';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN guest.guest_phone IS
+  2      'Guest_Phone = Guest phone number';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE guest ADD CONSTRAINT guest_pk PRIMARY KEY ( guest_no );
+
+Table GUEST altered.
+
+SQL> 
+SQL> CREATE TABLE manager (
+  2      manager_id        NUMBER(4) NOT NULL,
+  3      manager_name      VARCHAR2(50) NOT NULL,
+  4      manager_address   VARCHAR2(150) NOT NULL,
+  5      manager_phone     NUMBER(10) NOT NULL
+  6  );
+
+Table MANAGER created.
+
+SQL> 
+SQL> COMMENT ON COLUMN manager.manager_name IS
+  2      'Manager_Name = Manager name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN manager.manager_address IS
+  2      'Manager_Address = Manager address';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN manager.manager_phone IS
+  2      'Manager_Phone = Manager phone number';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE manager ADD CONSTRAINT manager_pk PRIMARY KEY ( manager_id );
+
+Table MANAGER altered.
+
+SQL> 
+SQL> CREATE TABLE point_of_interest (
+  2      town_longitude    NUMBER(6,2) NOT NULL,
+  3      town_latitude     NUMBER(6,2) NOT NULL,
+  4      poi_type          VARCHAR2(30) NOT NULL,
+  5      poi_street_name   VARCHAR2(30) NOT NULL,
+  6      poi_desc          VARCHAR2(150) NOT NULL,
+  7      poi_opn_time      NUMBER(4,2) NOT NULL,
+  8      poi_cls_time      NUMBER(4,2) NOT NULL,
+  9      poi_name          VARCHAR2(50) NOT NULL
+ 10  );
+
+Table POINT_OF_INTEREST created.
+
+SQL> 
+SQL> COMMENT ON COLUMN point_of_interest.town_longitude IS
+  2      'Town_Longitude = Town longitude';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN point_of_interest.town_latitude IS
+  2      'Town_Latitude= Town latitude';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN point_of_interest.poi_type IS
+  2      'POI_Type = Point of interest type';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN point_of_interest.poi_street_name IS
+  2      'POI_Street_Name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN point_of_interest.poi_name IS
+  2      'POI_Name = point of interest name';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE point_of_interest
+  2      ADD CONSTRAINT point_of_interest_pk PRIMARY KEY ( town_longitude,
+  3                                                        town_latitude,
+  4                                                        poi_type,
+  5                                                        poi_street_name,
+  6                                                        poi_name );
+
+Table POINT_OF_INTEREST altered.
+
+SQL> 
+SQL> CREATE TABLE rates (
+  2      booking_start_date   DATE NOT NULL,
+  3      cabin_no             NUMBER(3) NOT NULL,
+  4      resort_id            NUMBER(5) NOT NULL,
+  5      stay_period          NUMBER(2),
+  6      guest_no             NUMBER(6) NOT NULL
+  7  );
+
+Table RATES created.
+
+SQL> 
+SQL> COMMENT ON COLUMN rates.booking_start_date IS
+  2      'Booking_Start_Date = Booking start date';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN rates.cabin_no IS
+  2      'Cabin_No = Cabin number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN rates.resort_id IS
+  2      'Resort_ID = Resort ID';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN rates.stay_period IS
+  2      'Stay_Period = Stay period';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN rates.guest_no IS
+  2      'Guest_No = Guest number';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE rates
+  2      ADD CONSTRAINT rates_pk PRIMARY KEY ( booking_start_date,
+  3                                            cabin_no,
+  4                                            resort_id,
+  5                                            guest_no );
+
+Table RATES altered.
+
+SQL> 
+SQL> CREATE TABLE resort (
+  2      town_longitude   NUMBER(6,2) NOT NULL,
+  3      town_latitude    NUMBER(6,2) NOT NULL,
+  4      resort_id        NUMBER(5) NOT NULL,
+  5      resort_name      VARCHAR2(50) NOT NULL,
+  6      resort_address   VARCHAR2(100) NOT NULL,
+  7      star_rating      NUMBER(2,1) NOT NULL,
+  8      pets_allowed     CHAR(1) NOT NULL,
+  9      manager_id       NUMBER(4) NOT NULL
+ 10  );
+
+Table RESORT created.
+
+SQL> 
+SQL> COMMENT ON COLUMN resort.town_longitude IS
+  2      'Town_Longitude = Town longitude';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN resort.town_latitude IS
+  2      'Town_Latitude= Town latitude';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN resort.resort_id IS
+  2      'Resort_ID = Resort ID';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN resort.resort_name IS
+  2      'Resort_Name = Resort name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN resort.resort_address IS
+  2      'Resort_Address = resort address';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN resort.star_rating IS
+  2      'Star_Rating = Resort rating';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN resort.pets_allowed IS
+  2      'Pets_Allowed = pets allowance';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE resort ADD CONSTRAINT resort_pk PRIMARY KEY ( resort_id );
+
+Table RESORT altered.
+
+SQL> 
+SQL> CREATE TABLE review (
+  2      review_date     DATE NOT NULL,
+  3      guest_no        NUMBER(6) NOT NULL,
+  4      resort_id       NUMBER(5) NOT NULL,
+  5      review_rating   NUMBER(1)
+  6  );
+
+Table REVIEW created.
+
+SQL> 
+SQL> COMMENT ON COLUMN review.review_date IS
+  2      'Review_Date = Review date';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN review.guest_no IS
+  2      'Guest_No = Guest number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN review.resort_id IS
+  2      'Resort_ID = Resort ID';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN review.review_rating IS
+  2      'Review_Rating = Review rating';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE review
+  2      ADD CONSTRAINT review_pk PRIMARY KEY ( review_date,
+  3                                             resort_id,
+  4                                             guest_no );
+
+Table REVIEW altered.
+
+SQL> 
+SQL> CREATE TABLE running_sheet (
+  2      cabin_no         NUMBER(3) NOT NULL,
+  3      resort_id        NUMBER(5) NOT NULL,
+  4      charge           NUMBER(3),
+  5      act_cleantime    NUMBER(2),
+  6      contractor_no    NUMBER(3) NOT NULL,
+  7      clean_date       DATE NOT NULL,
+  8      contractor_no1   NUMBER NOT NULL,
+  9      contractor_no3   NUMBER NOT NULL
+ 10  );
+
+Table RUNNING_SHEET created.
+
+SQL> 
+SQL> COMMENT ON COLUMN running_sheet.cabin_no IS
+  2      'Cabin_No = Cabin number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN running_sheet.resort_id IS
+  2      'Resort_ID = Resort ID';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN running_sheet.charge IS
+  2      'Charge = Total charge';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN running_sheet.act_cleantime IS
+  2      'Act_Cleantime = Actual cleaning time';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN running_sheet.clean_date IS
+  2      'Clean_date = Date of cleaning';
+
+Comment created.
+
+SQL> 
+SQL> CREATE UNIQUE INDEX running_sheet__idx ON
+  2      running_sheet (
+  3          contractor_no
+  4      ASC );
+
+INDEX RUNNING_SHEET__IDX created.
+
+SQL> 
+SQL> ALTER TABLE running_sheet
+  2      ADD CONSTRAINT running_sheet_pk PRIMARY KEY ( cabin_no,
+  3                                                    resort_id,
+  4                                                    clean_date,
+  5                                                    contractor_no3 );
+
+Table RUNNING_SHEET altered.
+
+SQL> 
+SQL> CREATE TABLE town (
+  2      town_longitude       NUMBER(6,2) NOT NULL,
+  3      town_latitude        NUMBER(6,2) NOT NULL,
+  4      town_name            VARCHAR2(50) NOT NULL,
+  5      town_state           VARCHAR2(50) NOT NULL,
+  6      town_avg_summ_temp   NUMBER(2) NOT NULL,
+  7      town_avg_win_temp    NUMBER(2) NOT NULL,
+  8      town_population      NUMBER(7) NOT NULL,
+  9      town_elevation       NUMBER(5) NOT NULL
+ 10  );
+
+Table TOWN created.
+
+SQL> 
+SQL> COMMENT ON COLUMN town.town_longitude IS
+  2      'Town_Longitude = Town longitude';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN town.town_latitude IS
+  2      'Town_Latitude= Town latitude';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN town.town_name IS
+  2      'Town_Name = Town name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN town.town_state IS
+  2      'Town_State = Stateof the town';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN town.town_avg_summ_temp IS
+  2      'Town_Avg_Summ_Temp = Average summer temperature';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN town.town_avg_win_temp IS
+  2      'Town_Avg_Win_Temp = Average winter temperatue';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN town.town_population IS
+  2      'Town_Population = Town population';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN town.town_elevation IS
+  2      'Town_Elevation - Town elevation';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE town ADD CONSTRAINT town_pk PRIMARY KEY ( town_longitude,
+  2                                                        town_latitude );
+
+Table TOWN altered.
+
+SQL> 
+SQL> ALTER TABLE rates
+  2      ADD CONSTRAINT booking_rates FOREIGN KEY ( booking_start_date,
+  3                                                 cabin_no,
+  4                                                 resort_id,
+  5                                                 guest_no )
+  6          REFERENCES booking ( booking_start_date,
+  7                               cabin_no,
+  8                               resort_id,
+  9                               guest_no );
+
+Table RATES altered.
+
+SQL> 
+SQL> ALTER TABLE booking
+  2      ADD CONSTRAINT cabin_booking FOREIGN KEY ( cabin_no,
+  3                                                 resort_id )
+  4          REFERENCES cabin ( cabin_no,
+  5                             resort_id );
+
+Table BOOKING altered.
+
+SQL> 
+SQL> ALTER TABLE running_sheet
+  2      ADD CONSTRAINT cabin_runningsheet FOREIGN KEY ( cabin_no,
+  3                                                      resort_id )
+  4          REFERENCES cabin ( cabin_no,
+  5                             resort_id );
+
+Table RUNNING_SHEET altered.
+
+SQL> 
+SQL> ALTER TABLE contract
+  2      ADD CONSTRAINT contractor__contract FOREIGN KEY ( contractor_no )
+  3          REFERENCES cleaner ( contractor_no );
+
+Table CONTRACT altered.
+
+SQL> 
+SQL> ALTER TABLE running_sheet
+  2      ADD CONSTRAINT contractor_runningsheet FOREIGN KEY ( contractor_no )
+  3          REFERENCES cleaner ( contractor_no );
+
+Table RUNNING_SHEET altered.
+
+SQL> 
+SQL> ALTER TABLE booking
+  2      ADD CONSTRAINT guest_booking FOREIGN KEY ( guest_no )
+  3          REFERENCES guest ( guest_no );
+
+Table BOOKING altered.
+
+SQL> 
+SQL> ALTER TABLE review
+  2      ADD CONSTRAINT guest_review FOREIGN KEY ( guest_no )
+  3          REFERENCES guest ( guest_no );
+
+Table REVIEW altered.
+
+SQL> 
+SQL> ALTER TABLE resort
+  2      ADD CONSTRAINT manager_resort FOREIGN KEY ( manager_id )
+  3          REFERENCES manager ( manager_id );
+
+Table RESORT altered.
+
+SQL> 
+SQL> ALTER TABLE cabin
+  2      ADD CONSTRAINT resort_cabin FOREIGN KEY ( resort_id )
+  3          REFERENCES resort ( resort_id );
+
+Table CABIN altered.
+
+SQL> 
+SQL> ALTER TABLE review
+  2      ADD CONSTRAINT resort_review FOREIGN KEY ( resort_id )
+  3          REFERENCES resort ( resort_id );
+
+Table REVIEW altered.
+
+SQL> 
+SQL> ALTER TABLE point_of_interest
+  2      ADD CONSTRAINT town_poi FOREIGN KEY ( town_longitude,
+  3                                            town_latitude )
+  4          REFERENCES town ( town_longitude,
+  5                            town_latitude );
+
+Table POINT_OF_INTEREST altered.
+
+SQL> 
+SQL> ALTER TABLE resort
+  2      ADD CONSTRAINT town_resort FOREIGN KEY ( town_longitude,
+  3                                               town_latitude )
+  4          REFERENCES town ( town_longitude,
+  5                            town_latitude );
+
+Table RESORT altered.
+
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER fkntm_resort BEFORE
+  2      UPDATE OF manager_id ON resort
+  3  BEGIN
+  4      raise_application_error(-20225,'Non Transferable FK constraint  on table Resort is violated');
+  5  END;
+  6  /
+
+Trigger FKNTM_RESORT compiled
+
+SQL> 
+SQL> CREATE SEQUENCE cabin_cabin_no_seq START WITH 1 MINVALUE 1 NOCACHE ORDER;
+
+Sequence CABIN_CABIN_NO_SEQ created.
+
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER cabin_cabin_no_trg BEFORE
+  2      INSERT ON cabin
+  3      FOR EACH ROW
+  4      WHEN ( new.cabin_no IS NULL )
+  5  BEGIN
+  6      :new.cabin_no := cabin_cabin_no_seq.nextval;
+  7  END;
+  8  /
+
+Trigger CABIN_CABIN_NO_TRG compiled
+
+SQL> 
+SQL> CREATE SEQUENCE cleaner_contractor_no_seq START WITH 2000 MINVALUE 2000 NOCACHE ORDER;
+
+Sequence CLEANER_CONTRACTOR_NO_SEQ created.
+
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER cleaner_contractor_no_trg BEFORE
+  2      INSERT ON cleaner
+  3      FOR EACH ROW
+  4      WHEN ( new.contractor_no IS NULL )
+  5  BEGIN
+  6      :new.contractor_no := cleaner_contractor_no_seq.nextval;
+  7  END;
+  8  /
+
+Trigger CLEANER_CONTRACTOR_NO_TRG compiled
+
+SQL> 
+SQL> CREATE SEQUENCE guest_guest_no_seq START WITH 400000 MINVALUE 400000 NOCACHE ORDER;
+
+Sequence GUEST_GUEST_NO_SEQ created.
+
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER guest_guest_no_trg BEFORE
+  2      INSERT ON guest
+  3      FOR EACH ROW
+  4      WHEN ( new.guest_no IS NULL )
+  5  BEGIN
+  6      :new.guest_no := guest_guest_no_seq.nextval;
+  7  END;
+  8  /
+
+Trigger GUEST_GUEST_NO_TRG compiled
+
+SQL> 
+SQL> CREATE SEQUENCE manager_manager_id_seq START WITH 5000 MINVALUE 5000 NOCACHE ORDER;
+
+Sequence MANAGER_MANAGER_ID_SEQ created.
+
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER manager_manager_id_trg BEFORE
+  2      INSERT ON manager
+  3      FOR EACH ROW
+  4      WHEN ( new.manager_id IS NULL )
+  5  BEGIN
+  6      :new.manager_id := manager_manager_id_seq.nextval;
+  7  END;
+  8  /
+
+Trigger MANAGER_MANAGER_ID_TRG compiled
+
+SQL> 
+SQL> CREATE SEQUENCE resort_resort_id_seq START WITH 10000 MINVALUE 10000 NOCACHE ORDER;
+
+Sequence RESORT_RESORT_ID_SEQ created.
+
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER resort_resort_id_trg BEFORE
+  2      INSERT ON resort
+  3      FOR EACH ROW
+  4      WHEN ( new.resort_id IS NULL )
+  5  BEGIN
+  6      :new.resort_id := resort_resort_id_seq.nextval;
+  7  END;
+  8  /
+
+Trigger RESORT_RESORT_ID_TRG compiled
+
+SQL> 
+SQL> CREATE SEQUENCE running_sheet_cabin_no_seq START WITH 1 MINVALUE 1 NOCACHE ORDER;
+
+Sequence RUNNING_SHEET_CABIN_NO_SEQ created.
+
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER running_sheet_cabin_no_trg BEFORE
+  2      INSERT ON running_sheet
+  3      FOR EACH ROW
+  4      WHEN ( new.cabin_no IS NULL )
+  5  BEGIN
+  6      :new.cabin_no := running_sheet_cabin_no_seq.nextval;
+  7  END;
+  8  /
+
+Trigger RUNNING_SHEET_CABIN_NO_TRG compiled
+
+SQL> SET ECHO OFF;
